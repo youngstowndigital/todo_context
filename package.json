@@ -1,0 +1,17 @@
+{
+  "name": "todo_context",
+  "version": "1.0.0",
+  "description": "Simple todo app using react context hook",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon index"
+  },
+  "author": "Mike Wittenauer",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
