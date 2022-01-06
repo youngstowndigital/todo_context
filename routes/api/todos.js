@@ -1,4 +1,5 @@
 const express = require('express');
+const { body, validationResult } = require('express-validator');
 
 const router = express.Router();
 
@@ -18,6 +19,28 @@ router.get('/:id', (req, res) => {
         return res.status(404).json({ message: 'Todo not found' });
 
     res.json(todo);
+});
+
+router.post(
+    '/', 
+    body('description', 'Please provide a description').notEmpty(),
+    body('title', 'Please provide a title').notEmpty(),
+    (req, res) => { 
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    
+    const newTodo = {
+        id: Math.round(Math.random() * 1000),
+        title: req.body.title,
+        description: req.body.description,
+        complete: false
+    }
+
+    todos.unshift(newTodo);
+
+    res.json(todos);
 });
 
 router.put('/:id/toggle', (req, res) => {

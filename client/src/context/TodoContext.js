@@ -5,6 +5,7 @@ export const TodoContext = createContext();
 
 const TodoProvider = ({ children }) => {
     const [todos, setTodos] = useState([]);
+    const [todoErrors, setTodoErrors] = useState([]);
     const [todo, setTodo] = useState({ 
         title: '',
         description: '',
@@ -46,12 +47,23 @@ const TodoProvider = ({ children }) => {
         }
     }
 
+    const addTodo = async ({ title, description }) => {
+        try {
+            const res = await axios.post(`http://localhost:5000/todos`, { title, description });
+
+            setTodos(res.data);
+        } catch (error) {
+            setTodoErrors(error.response.data);
+            console.error(error.message);
+        }
+    }
+
     useEffect(() => {
         loadTodos();
-    }, [])
+    }, []);
 
     return (
-        <TodoContext.Provider value={ { todos, todo, loadTodo, toggleTodo } }>
+        <TodoContext.Provider value={ { todos, todo, todoErrors, loadTodo, toggleTodo, addTodo } }>
             { children }
         </TodoContext.Provider>
     )
