@@ -8,7 +8,7 @@ const TodoPage = () => {
 
     useEffect(() => {
         loadTodo(params.id);
-    }, [todo])
+    }, [todo, loadTodo, toggleTodo, params.id])
 
     return (
         <Fragment>
